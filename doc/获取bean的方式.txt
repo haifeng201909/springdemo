@@ -1,0 +1,27 @@
+获取bean的三种方法
+getBean(Xxx.class)
+getBean("bean的id")
+getBean("bean的id", Xxx.class)
+
+给引用数据类型赋值2种方式：
+如果是字面量，则直接赋值，否则有如下两种赋值方式
+ref
+内部bean
+
+普通bean vs 工厂bean
+
+spring IOC容器对bean的生命周期进行管理的过程：
+1、通过构造器或工厂方法创建bean实例
+2、为bean的属性设置值和对其他bean的引用（依赖注入）
+3、调用bean的初始化方法
+4、bean使用
+5、当容器关闭时，调用bean的销毁方法
+
+bean的后置处理器：
+bean后置处理器允许在调用初始化方法前后对bean进行额外的处理
+后置处理器一旦设置以后，对每个bean都有效
+bean后置处理器需要实现接口：
+    org.springframework.beans.factory.config.BeanPostProcessor
+    在初始化方法被调用前后，spring将把每个bean实例分别传送给上述接口的以下两个方法：
+    postProcessBeforeInitialization(Object, String)
+    postProcessAfterInitialization(Object, String)

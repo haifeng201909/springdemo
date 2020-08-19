@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!--作用域scope-->
+    <!--
+    singleton 在容器初始化时就会创建对象
+    prototype 在容器初始化时不会主动创建对象，用到时才会创建
+    -->
+    <bean id="student" class="com.haifeng.ioc.scope.Student" scope="singleton">
+        <property name="sid" value="1001"></property>
+        <property name="sname" value="张三"></property>
+    </bean>
+
+</beans>

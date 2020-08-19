@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!-- 自动注入测试 -->
+    <!--
+    autowire 根据某种策略自动为非字面量属性赋值 autowire="byName|byType"
+    byName 通过属性名和spring容器中管理的bean的id进行比较，若一致则可直接赋值
+    byType 通过spring容器中bean的类型，为兼容性的属性赋值
+           在使用byType的过程中，要求spring容器中只能有一个能为属性赋值的bean
+    选用建议 当设置autowire属性，会作用于该bean中的所有非字面量属性，因此这两种方式一般都不会使用
+
+
+    byName 通过名称自动装配 需要被装配的bean的id与需要赋值的属性名称一致，就会自动赋值
+    byType 通过类型自动装配 只要在spring的管理范围内有一个对象能够为该属性赋值，则可以自动装配
+    -->
+
+    <!-- 方式一 通过ref赋值 -->
+    <bean id="emp" class="com.haifeng.ioc.auto.Emp">
+        <property name="eid" value="1001"></property>
+        <property name="ename" value="张三"></property>
+        <property name="car" ref="car"></property>
+        <property name="dept" ref="dept"></property>
+    </bean>
+    <bean id="car" class="com.haifeng.ioc.auto.Car">
+        <property name="cid" value="666666"></property>
+        <property name="cname" value="霸道"></property>
+    </bean>
+    <bean id="dept" class="com.haifeng.ioc.auto.Dept">
+        <property name="did" value="1111"></property>
+        <property name="dname" value="开发部"></property>
+    </bean>
+
+    <!-- 方式二 通过byName赋值 -->
+    <!--
+    此处不生效，因为byName是以属性名称作为id来查找需要装配的bean的
+    这里属性名称是car以及dept，而不是car2以及dept2
+    -->
+    <bean id="emp2" class="com.haifeng.ioc.auto.Emp" autowire="byName">
+        <property name="eid" value="1001"></property>
+        <property name="ename" value="张三"></property>
+    </bean>
+    <!--<bean id="car2" class="com.haifeng.ioc.auto.Car">-->
+        <!--<property name="cid" value="6666662"></property>-->
+        <!--<property name="cname" value="霸道2"></property>-->
+    <!--</bean>-->
+    <!--<bean id="dept2" class="com.haifeng.ioc.auto.Dept">-->
+        <!--<property name="did" value="11112"></property>-->
+        <!--<property name="dname" value="开发部2"></property>-->
+    <!--</bean>-->
+
+    <!-- 方式三 通过byType赋值 -->
+    <!--
+    byType不仅可以为其本身类型赋值，同时也可以为其父类或者接口赋值
+    如果属性的类型与spring管理的对象的类型一致，则byType一定可以为该类型的属性赋值
+    兼容性：
+    spring管理的对象不仅可以为其本身的类型赋值，同时也可以为其父类以及其实现的接口类型的属性赋值
+    -->
+    <bean id="emp3" class="com.haifeng.ioc.auto.Emp" autowire="byType">
+        <property name="eid" value="1001"></property>
+        <property name="ename" value="张三"></property>
+    </bean>
+    <!--<bean id="car3" class="com.haifeng.ioc.auto.Car">-->
+        <!--<property name="cid" value="6666662"></property>-->
+        <!--<property name="cname" value="霸道2"></property>-->
+    <!--</bean>-->
+    <!--<bean id="dept3" class="com.haifeng.ioc.auto.Dept">-->
+        <!--<property name="did" value="11112"></property>-->
+        <!--<property name="dname" value="开发部2"></property>-->
+    <!--</bean>-->
+
+</beans>

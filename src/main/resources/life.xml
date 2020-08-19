@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!--
+     init-method 用来指定初始化方法
+     destroy-method 用来指定销毁方法
+     -->
+    <bean id="person" class="com.haifeng.ioc.life.Person" init-method="init" destroy-method="destroy">
+        <property name="id" value="1001"></property>
+        <property name="sex" value="男"></property>
+    </bean>
+
+    <!--
+    配置后置处理器，若没有改配置，即使实现了BeanPostProcessor接口，也无法生效
+    -->
+   <bean class="com.haifeng.ioc.life.AfterHandler"></bean>
+
+</beans>

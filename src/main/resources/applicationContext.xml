@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+    <!--通过setter方法注入-->
+    <bean id="studentOne" class="com.haifeng.spring.di.Student">
+        <!--setter注入找的不是属性名，而是setter方法-->
+        <property name="id" value="10001"></property>
+        <property name="name" value="张三"></property>
+        <property name="score" value="89"></property>
+        <property name="teacher" ref="teacherOne"></property>
+    </bean>
+    <bean id="teacherOne" class="com.haifeng.spring.di.Teacher">
+        <property name="tid" value="20001"></property>
+        <property name="name" value="小明"></property>
+    </bean>
+
+    <bean id="studentThree" class="com.haifeng.spring.di.Student">
+        <property name="id" value="10003"></property>
+        <property name="name" value="张三三"></property>
+        <property name="score" value="79.8"></property>
+        <property name="teacher">
+            <!--内部bean，只能在内部访问-->
+            <!--定义在某个bean中的bean，只能在当前bean中进行访问-->
+            <bean id="teacherThree" class="com.haifeng.spring.di.Teacher">
+                <property name="tid" value="20003"></property>
+                <property name="name" value="大明"></property>
+            </bean>
+        </property>
+    </bean>
+
+    <!--通过构造方法注入-->
+    <bean id="studentTwo" class="com.haifeng.spring.di.Student">
+        <constructor-arg index="0" value="10002"></constructor-arg>
+        <constructor-arg index="1" value="李四"></constructor-arg>
+        <constructor-arg index="2" value="69"></constructor-arg>
+        <constructor-arg index="3" ref="teacherOne"></constructor-arg>
+    </bean>
+
+    <!--list集合类型赋值-->
+    <bean id="t1" class="com.haifeng.spring.di.Teacher">
+        <property name="tid" value="0000"></property>
+        <property name="name" value="小华"></property>
+        <property name="cls">
+            <!--list内容为字面量-->
+            <list>
+                <value>A</value>
+                <value>B</value>
+                <value>C</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="t2" class="com.haifeng.spring.di.Teacher">
+        <property name="tid" value="10002"></property>
+        <property name="name" value="婷姐"></property>
+        <property name="students">
+            <!--list内容为引用数据类型-->
+            <list>
+                <ref bean="studentOne"></ref>
+                <ref bean="studentTwo"></ref>
+                <ref bean="studentThree"></ref>
+            </list>
+        </property>
+    </bean>
+
+    <!--数组类型赋值-->
+    <bean id="t3" class="com.haifeng.spring.di.Teacher">
+        <property name="tid" value="10003"></property>
+        <property name="name" value="僵哥"></property>
+        <property name="fancys">
+            <array>
+                <value>乒乓球</value>
+                <value>足球</value>
+                <value>爬山</value>
+            </array>
+        </property>
+    </bean>
+
+    <!--Map类型赋值-->
+    <bean id="t4" class="com.haifeng.spring.di.Teacher">
+        <property name="tid" value="10004"></property>
+        <property name="name" value="范爷"></property>
+        <property name="bossMap">
+            <map>
+                <!--一组key value-->
+                <entry>
+                    <key>
+                        <value>10001</value>
+                    </key>
+                    <value>佟老师</value>
+                </entry>
+                <entry>
+                    <key>
+                        <value>10002</value>
+                    </key>
+                    <value>李老师</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <!--注入list第二种方式：ref-->
+    <bean id="t5" class="com.haifeng.spring.di.Teacher">
+        <property name="tid" value="10005"></property>
+        <property name="name" value="root"></property>
+        <property name="students" ref="students"></property>
+    </bean>
+    <!--创建list对象-->
+    <util:list id="students">
+        <ref bean="studentOne"></ref>
+        <ref bean="studentTwo"></ref>
+        <ref bean="studentThree"></ref>
+        <!--外层已表示list，此处无需再用list-->
+        <!--<list>
+            <ref bean="studentOne"></ref>
+            <ref bean="studentTwo"></ref>
+        </list>-->
+    </util:list>
+
+    <util:map id="map">
+        <entry>
+            <key>
+                <value>10003</value>
+            </key>
+            <value>张三丰</value>
+        </entry>
+    </util:map>
+
+</beans>
